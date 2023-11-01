@@ -99,7 +99,6 @@ function displayBanner($banner)
             <div class="about-me-content">
                 <h1>ABOUT ME</h1>
                 <h2 id="name">Alianur</h2>
-                <!-- Tambahkan informasi about me sesuai kebutuhan -->
             </div>
         </div>
         <div class="copyright">
@@ -113,11 +112,9 @@ function displayBanner($banner)
             if (confirm("Are you sure you want to delete this banner?")) {
                 $.ajax({
                     type: "GET",
-                    url: "hapus.php?id=" + bannerId, // Adjust the URL to the actual file
+                    url: "hapus.php?id=" + bannerId,
                     success: function(response) {
-                        // Show an alert
                         alert(response);
-                        // Remove the deleted banner from the DOM
                         $('#banner_' + bannerId).remove();
                     },
                     error: function(error) {
