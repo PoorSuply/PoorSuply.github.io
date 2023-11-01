@@ -1,5 +1,5 @@
 <?php
-include 'koneksi.php';  // Sesuaikan dengan file koneksi.php Anda.
+include 'koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -10,29 +10,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $light_cone = $_POST['light_cone'];
     $description = $_POST['description'];
 
-    // Proses upload gambar
     $image_name = $_FILES['image']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
     $image_path = 'uploads/' . $image_name;
 
     move_uploaded_file($image_tmp, $image_path);
 
-    // Pemeriksaan duplikat berdasarkan nama
     $duplicateCheck = mysqli_query($conn, "SELECT * FROM banners WHERE name = '$name'");
 
     if (mysqli_num_rows($duplicateCheck) > 0) {
         echo "<script>alert('Banner dengan nama tersebut sudah ada.'); window.location='tambah.php';</script>";
     } else {
-        // Query untuk menambahkan banner
         $sql = "INSERT INTO banners (name, element, path, rarity, release_date, light_cone, description, image_name)
                 VALUES ('$name', '$element', '$path', '$rarity', '$release_date', '$light_cone', '$description', '$image_name')";
 
         if ($conn->query($sql) === TRUE) {
-            // Jika berhasil, arahkan kembali ke index.php setelah 2 detik
             echo "<script>alert('Banner berhasil ditambahkan.'); window.location='index.php';</script>";
             exit();
         } else {
-            // Jika gagal, kembali ke tambah.php setelah 2 detik
             echo "<script>alert('Error: " . $conn->error . "'); window.location='tambah.php';</script>";
             exit();
         }
@@ -46,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Banner</title>
-    <link rel="stylesheet" href="styletambah.css"> <!-- Sesuaikan dengan file CSS Anda -->
+    <link rel="stylesheet" href="styletambah.css">
 </head>
 <body>
     <h2>Add Banner</h2>
